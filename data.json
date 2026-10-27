@@ -26,9 +26,7 @@
   "dislikeLabel": "⌒⌒♡",
   "dislikes": [
     "[[드림 지우기]], 견제 및 사찰",
-    "허공저격, 발콕콕, 이슈에 말 심하게 얹으시는 분",
-    "AI 생성 이미지의 알고리즘 확산 방지",
-    "공개된 계정에서 NSFW 이미지 민감 없이 올리기"
+    "허공저격, 발콕콕, 이슈에 말 심하게 얹으시는 분"
   ],
   "links": [
     [
@@ -57,11 +55,11 @@
       ""
     ]
   ],
-  "noteLabel": "배려 불필요",
-  "note": "좋아하는 게 많아 해당 목록 변동 가능성 다분합니다. 짧고 맡은 플레이가 잦아 다른 캐릭터 얘기도 쉽게 합니다. [[links]]",
+  "noteLabel": "배려",
+  "note": "==7/임찬희== 배려만 해주세요 나머지는 알아서 피해 다니고 있습니다",
   "footLeft": "MUSIC",
-  "update": "UPDATE 2026.10.",
-  "tabTitle": "만약",
+  "update": "UPDATE 2026.10.27",
+  "tabTitle": "SIMPLE",
   "favicon": "data:image/png;base64,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",
   "music": {
     "url": "https://youtu.be/rp9WXdxLYpU?si=1_7kJY9QWDfOa7kt",
@@ -72,20 +70,16 @@
   "cursorSize": 32,
   "popups": [
     {
-      "title": "ONLY 1T2D",
-      "body": "AFTERMESS @qwertu 7\n성운대 @kit 임찬희\n스즈미야구미 조장 @puppy3 스즈미야 토오루\nFRONTLINE | @meowmoon Dante Romano\nBLUE PAIRY | @psmoke_nonsmoker 냐냐냥/지새벽",
-      "title2": "또",
-      "body2": "최대 1T2D 배려 유지하고 있어 7/임찬희 배려만 해주세요 나머지는 알아서 피해 다닙니다"
-    },
-    {
-      "title": "X",
-      "body": "https://x.com/noxuelux"
-    },
-    {
       "title": "에셋",
       "body": "Novel ai, Pix ai 둘 다 이용하고 있으며 늘 Ai 사용했음을 고지하고 올립니다 Ai 생성에 대해 부적절함을 잘 인지하고 있으며 그렇기에 트친소 제외 상시 프로텍트 계정을 걸어둡니다",
-      "title2": "드림 지우기",
-      "body2": "데인 게 너무 많아 경험하고 싶지 않습니다 1T2D 배려가 불가능할 경우 절대 흔적을 남기지 말아주세요 동담 분과 연결되어 있는 것도 보기가 힘듭니다"
+      "title2": "다음",
+      "body2": "AI 생성 이미지의 알고리즘 확산 방지 및 공개된 계정에서 NSFW 이미지 민감 없이 올리기 싫어해 주의해 주셨으면 합니다"
+    },
+    {
+      "title": "드림 지우기",
+      "body": "데인 게 너무 많아 경험하고 싶지 않습니다 1T2D 배려가 불가능할 경우 절대 흔적을 남기지 말아주세요 동담 분과 연결되어 있는 것도 보기가 힘듭니다",
+      "title2": "",
+      "body2": ""
     }
   ],
   "undefined": "C:\\fakepath\\픽셀 아트 물방울 아이콘.png"
