@@ -58,7 +58,7 @@
     "url": "",
     "volume": 50
   },
-  "cursor": "",
+  "cursor": "assets/cursor.png?v=1793063065080",
   "popups": [
     {
       "title": "Ai 이미지 소비 및 생성",
@@ -75,5 +75,5 @@
       "body": "교류는 아래 링크로 받아요.\n[트위터](https://x.com/aksdifr)"
     }
   ],
-  "undefined": "C:\\fakepath\\픽셀 아트 구름 아이콘.png"
+  "undefined": "C:\\fakepath\\픽셀 아트 물방울 아이콘.png"
 }
