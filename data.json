@@ -65,9 +65,9 @@
     "url": "https://youtu.be/rp9WXdxLYpU?si=1_7kJY9QWDfOa7kt",
     "volume": 9
   },
-  "cursor": "dot",
+  "cursor": "assets/cursor.png?v=1793063065080",
   "cursorHot": "22 2",
-  "cursorSize": 17,
+  "cursorSize": 32,
   "popups": [
     {
       "title": "에셋",
@@ -78,6 +78,12 @@
     {
       "title": "드림 지우기",
       "body": "데인 게 너무 많아 경험하고 싶지 않습니다 1T2D 배려가 불가능할 경우 절대 흔적을 남기지 말아주세요 동담 분과 연결되어 있는 것도 보기가 힘듭니다",
+      "title2": "",
+      "body2": ""
+    },
+    {
+      "title": "ONLY 1T2D",
+      "body": "기본 1T2D 배려하고 있으며 배려의 기준은 찍먹, 탐라 유입 정도로 해 드리고 있어 동일한 배려 받길 원합니다 이미 배려 리스트에 적혀 있는데 후발 주자로 정실이 되신 경우 친분 관계 상관 없이 후발 주자를 정리합니다",
       "title2": "",
       "body2": ""
     }
