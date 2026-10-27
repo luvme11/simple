@@ -12,7 +12,7 @@
 body{margin:0;background:var(--bg);color:var(--fg);font:13px/1.8 Pretendard,system-ui,sans-serif;min-height:100vh}
 #menu{position:fixed;top:12px;right:14px;background:none;border:0;color:var(--fg);font-size:18px;cursor:pointer;opacity:.5}
 #menu:hover{opacity:1}
-main{max-width:422px;margin:70px auto 0;padding:0 14px}
+main{max-width:422px;margin:70px auto 0;padding:0 14px 90px}
 header{display:flex;justify-content:space-between;align-items:flex-end;padding-bottom:6px}
 h1{margin:0;font-size:30px;line-height:1.1;font-weight:800}
 .hr{text-align:right;font-size:11px;line-height:1.5;color:var(--sub)}.hr b{display:block;color:var(--fg);font-size:12px}
@@ -34,9 +34,10 @@ ul{list-style:none;margin:0;padding:0}li{font-size:11.5px;line-height:1.5;paddin
 .note{padding:10px 0 8px 10px;border-left:1px solid var(--line);font-size:11px;line-height:1.9;text-align:justify}
 footer{display:flex;justify-content:space-between;align-items:center;padding:8px 0;font-size:9.5px;letter-spacing:.15em;font-weight:700}
 .tg{display:flex;align-items:center;gap:7px;cursor:pointer;background:none;border:0;color:var(--fg);font:inherit;padding:0}
-.tg s{width:22px;height:12px;border:1.5px solid var(--fg);border-radius:8px;position:relative}
-.tg s:after{content:"";position:absolute;top:1.5px;left:2px;width:6px;height:6px;border-radius:50%;background:var(--fg);transition:.2s}
-:root[data-theme=dark] .tg s:after{left:11px}
+.tg s{width:22px;height:12px;border:1.5px solid var(--fg);border-radius:8px;position:relative;top:1px}
+.tg s:after{content:"";position:absolute;top:50%;margin-top:-2.5px;left:2px;width:6px;height:6px;border-radius:50%;background:var(--fg);transition:.2s}
+.tg.on s{background:var(--fg)}.tg.on s:after{left:11px;background:var(--bg)}.tg{transition:opacity .2s}
+#pane input[type=range]{padding:0;border:0;accent-color:var(--fg);box-shadow:none!important}
 .pop{border-bottom:1px dotted var(--fg);cursor:pointer}
 .pop.on{background:var(--chip);color:var(--chipfg);border-bottom-color:transparent}
 .pw{position:absolute;z-index:6;width:250px;max-width:calc(100vw - 16px);background:var(--bg);color:var(--fg);border:1px solid var(--line);box-shadow:5px 5px 0 var(--sub);padding:12px 12px 10px;text-align:left}
@@ -49,6 +50,7 @@ footer{display:flex;justify-content:space-between;align-items:center;padding:8px
 .pw.inv .pc{background:var(--chip);color:var(--chipfg);border-color:var(--chipfg)}
 .pw.inv mark{background:var(--chipfg);color:var(--chip)}
 .pw.inv .pop{border-bottom-color:var(--chipfg)}
+#ytw{position:fixed;right:0;bottom:0;width:1px;height:1px;opacity:0;pointer-events:none;overflow:hidden}
 #lines{position:absolute;left:0;top:0;width:1px;height:1px;overflow:visible;pointer-events:none;z-index:5}
 .ex{border-bottom:1px dotted var(--fg)}
 .eg{display:grid;grid-template-columns:1fr 1fr;gap:6px 14px;align-items:center;border-bottom:1px solid var(--line);padding:9px 0;font-size:12px;line-height:1.6}
@@ -56,7 +58,6 @@ footer{display:flex;justify-content:space-between;align-items:center;padding:8px
 .eg small{color:var(--sub);font-size:10.5px}
 #pane h3{font-size:12px;margin:20px 0 2px}
 #pane ol{margin:4px 0;padding-left:18px;font-size:11.5px;line-height:1.9}
-#fn{text-align:center;margin:70px 0 30px;font-size:10px;letter-spacing:.2em;color:var(--sub)}
 
 /* admin */
 #ov{position:fixed;inset:0;background:rgba(0,0,0,.35);display:none;align-items:center;justify-content:center;padding:14px;z-index:9}
@@ -96,10 +97,10 @@ nav button.on{background:var(--chip);color:var(--chipfg);font-weight:700}
   <div class="cols"><section><span class="chip" id="lc"></span><ul id="ll"></ul></section><section><span class="chip" id="dc"></span><ul id="dl"></ul></section></div>
   <div class="low"><div class="links" id="links"></div><div class="note" id="note"></div></div>
   <footer><button class="tg" id="tg"><s></s><span id="fl"></span></button><span id="upd"></span></footer></div>
-  <div id="fn"></div>
 </main>
 
 <svg id="lines"></svg>
+<div id="ytw"></div>
 <div id="ov"><div id="ad">
   <header><span>관리자<em>ADMIN · v1</em></span><button id="x">✕</button></header>
   <nav id="nav"></nav>
@@ -116,13 +117,14 @@ const DEF={
  dislikeLabel:"( •̀_•́ )",dislikes:["짖은 욕설을 포함한 트윗","Ai 생성 이미지의 알고리즘 확산 방지","특정 인물 및 장르의 빈번한 비난 유입","캐릭터를 향한 과도한 희롱·조롱성 트윗"],
  links:[["렌치","@FaaastRaven_","https://x.com/FaaastRaven_"],["이시르","@moran_",""],["10","@qwerty",""]],
  noteLabel:"배려 불필요",note:"좋아하는 게 많아 해당 목록 변동 가능성 다분합니다. 짧고 맡은 플레이가 잦아 다른 캐릭터 얘기도 쉽게 합니다. [[links]]",
- footLeft:"DEAR",update:"UPDATE 2026.10.",footer:"LUVINFO",tabTitle:"만약",favicon:"🖤",
+ footLeft:"MUSIC",update:"UPDATE 2026.10.",tabTitle:"만약",favicon:"🖤",music:{url:"",volume:50},cursor:"",
  popups:[
   {title:"Ai 이미지 소비 및 생성",body:"개인 만족용으로 NovelAI를 이용한 Ai 이미지 생성합니다…… 전달해 드린 에셋은 저장 및 가공, 닉네임을 밝히지 않은 업로드 등 어떻게 사용해 주시든 대체로 상관없습니다 다만 이별 후 사용도 개의치 않아요"},
   {title:"OPEN CBC",body:"유입, 타임라인 내 자연 발생, 찍먹…… 이것저것 상관없습니다 메인이라고 할 만한 캐릭터 없이 굴러가며 떠드는 캐릭터가 그때그때 바뀝니다 하단 캐릭터 리스트의 순서도 별 의미 없습니다",title2:"그리고",body2:"자주는 아니지만 언급할 수 있습니다: @UwUx0w0 님의 실론, @seita 님과 @......ToT 님, @qwerty 님의 캐릭터 전반"},
   {title:"links",body:"교류는 아래 링크로 받아요.\n[트위터](https://x.com/aksdifr)"}
  ]
 };
+const DOT="data:image/svg+xml,"+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"><circle cx="10" cy="10" r="5" fill="black" stroke="white" stroke-width="2"/></svg>');
 const CFG_KEY="home_gh_cfg";
 let D=JSON.parse(JSON.stringify(DEF)),SHA=null,tab="gh";
 const hl=s=>esc(s)
@@ -142,17 +144,38 @@ function render(){
  $("dl").innerHTML=D.dislikes.map(x=>`<li>${hl(x)}</li>`).join("");
  $("links").innerHTML=D.links.map(l=>`<a ${l[2]?`href="${esc(l[2])}" target="_blank" rel="noopener"`:""}>${esc(l[0])}<i></i><span>${esc(l[1])}</span></a>`).join("");
  $("note").innerHTML=`<b>${hl(D.noteLabel)}</b> ${hl(D.note)}`;
- $("fl").textContent=D.footLeft;$("upd").textContent=D.update;$("fn").textContent=D.footer;
+ $("fl").textContent=D.footLeft;$("upd").textContent=D.update;
  document.title=D.tabTitle;
+ const mi=ytId(D.music.url);$("tg").style.opacity=(mi.v||mi.l)?1:.35;
+ const hot=D.cursor==="dot"?"10 10":"0 0",cs=D.cursor==="dot"?DOT:String(D.cursor||"").replace(/["')\\]/g,"");
+ let cst=$("cur");if(!cst){cst=document.createElement("style");cst.id="cur";document.head.appendChild(cst)}
+ cst.textContent=cs?`*{cursor:url("${cs}") ${hot},auto}.pop,button,a,label,summary{cursor:url("${cs}") ${hot},pointer}`:"";
  let f=document.querySelector("link[rel=icon]");if(!f){f=document.createElement("link");f.rel="icon";document.head.appendChild(f)}
- f.href="data:image/svg+xml,"+encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>${D.favicon}</text></svg>`);
+ f.href=/^(https?:|data:|\.{0,2}\/)|\.(png|jpe?g|gif|svg|ico|webp)(\?|$)/i.test(D.favicon)?D.favicon:"data:image/svg+xml,"+encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>${D.favicon}</text></svg>`);
 }
 async function load(){
- try{const r=await fetch("data.json?"+Date.now());if(r.ok)D={...DEF,...await r.json()}}catch(e){}
+ try{const r=await fetch("data.json?"+Date.now());if(r.ok){D={...DEF,...await r.json()};D.music={...DEF.music,...(D.music||{})}}}catch(e){}
  render();
 }
-$("tg").onclick=()=>{const r=document.documentElement;const d=r.dataset.theme==="dark";r.dataset.theme=d?"light":"dark";try{localStorage.setItem("theme",r.dataset.theme)}catch(e){}};
-try{const t=localStorage.getItem("theme");if(t)document.documentElement.dataset.theme=t}catch(e){}
+/* ---- music ---- */
+let pl=null,playing=false,ytP=null;
+function ytId(u){try{const x=new URL(u);let v=x.searchParams.get("v"),l=x.searchParams.get("list");if(!v&&x.hostname==="youtu.be")v=x.pathname.slice(1);const m=x.pathname.match(/\/(embed|shorts|live)\/([\w-]{6,})/);if(!v&&m)v=m[2];return{v,l}}catch(e){return{}}}
+function loadYT(){return ytP||(ytP=new Promise(ok=>{if(window.YT&&YT.Player)return ok();window.onYouTubeIframeAPIReady=ok;const t=document.createElement("script");t.src="https://www.youtube.com/iframe_api";document.head.appendChild(t)}))}
+async function toggleMusic(){
+ const{v,l}=ytId(D.music.url);if(!v&&!l)return;
+ const key=D.music.url;
+ if(pl&&pl.key===key){playing?pl.pauseVideo():pl.playVideo();return}
+ await loadYT();
+ if(pl){try{pl.destroy()}catch(e){}pl=null;playing=false;$("tg").classList.remove("on")}
+ $("ytw").innerHTML='<div id="yt"></div>';
+ const pv={autoplay:1,playsinline:1};
+ if(l){pv.list=l;pv.listType="playlist"}else pv.playlist=v;
+ pl=new YT.Player("yt",{height:"1",width:"1",videoId:v||undefined,playerVars:pv,events:{
+  onReady:e=>{e.target.setVolume(D.music.volume);if(l)e.target.setLoop(true);e.target.playVideo()},
+  onStateChange:e=>{if(e.data===0&&!l){e.target.seekTo(0);e.target.playVideo()}playing=e.data===1||e.data===3;$("tg").classList.toggle("on",playing)}}});
+ pl.key=key;
+}
+$("tg").onclick=toggleMusic;
 
 /* ---- popups ---- */
 const GAP=50,OP=new Map();
@@ -202,7 +225,7 @@ addEventListener("resize",layout);
 addEventListener("keydown",e=>{if(e.key==="Escape"&&!$("ov").classList.contains("on")){const k=[...OP.keys()].pop();if(k)close(k)}});
 
 /* ---- admin ---- */
-const TABS=[["gh","GitHub 설정"],["_","SITE"],["help","글쓰기 도움말"],["basic","기본 정보"],["bio","소개글"],["popups","팝업 글"],["lists","좋아요 · 싫어요"],["links","링크 연결"],["note","배려 리스트"],["screen","화면 문구"]];
+const TABS=[["gh","GitHub 설정"],["_","SITE"],["help","글쓰기 도움말"],["basic","기본 정보"],["bio","소개글"],["popups","팝업 글"],["lists","좋아요 · 싫어요"],["links","링크 연결"],["note","배려 리스트"],["music","음악"],["favicon","파비콘"],["cursor","마우스 커서"],["screen","화면 문구"]];
 $("nav").innerHTML=TABS.map(t=>t[0]==="_"?`<small>${t[1]}</small>`:`<button data-t="${t[0]}">${t[1]}</button>`).join("");
 $("nav").onclick=e=>{const b=e.target.closest("button");if(b){tab=b.dataset.t;pane()}};
 const inp=(k,l,v)=>`<label>${l}</label><input data-k="${k}" value="${esc(v)}">`;
@@ -219,7 +242,7 @@ function pane(){
  if(tab==="lists")h=`<h2>좋아요 · 싫어요</h2><p>한 줄에 항목 하나씩 적어주세요. ==내용== 으로 검정 형광펜을 칠할 수 있어요.</p>${inp("likeLabel","왼쪽 칩 이름",D.likeLabel)}${area("likes","왼쪽 목록",D.likes.join("\n"))}${inp("dislikeLabel","오른쪽 칩 이름",D.dislikeLabel)}${area("dislikes","오른쪽 목록",D.dislikes.join("\n"))}`;
  if(tab==="links")h=`<h2>링크 연결</h2><p>한 줄에 하나씩: 이름 | @아이디 | 주소</p>${area("links","링크 목록",D.links.map(l=>l.join(" | ")).join("\n"))}`;
  if(tab==="note")h=`<h2>배려 리스트</h2><p>링크 목록 옆에 보이는 글이에요.</p>${inp("noteLabel","굵은 제목",D.noteLabel)}${area("note","내용",D.note)}`;
- if(tab==="screen")h=`<h2>화면 문구</h2><p>하단과 탭에 표시되는 문구예요.</p>${inp("footLeft","토글 옆 글자",D.footLeft)}${inp("update","업데이트 표기",D.update)}${inp("footer","맨 아래 글자",D.footer)}${inp("tabTitle","탭 이름",D.tabTitle)}${inp("favicon","파비콘 (이모지 1개)",D.favicon)}
+ if(tab==="screen")h=`<h2>화면 문구</h2><p>하단 토글 옆 글자와 탭에 표시되는 문구예요.</p>${inp("footLeft","토글 옆 글자",D.footLeft)}${inp("update","업데이트 표기",D.update)}${inp("tabTitle","탭 이름",D.tabTitle)}
   <button class="pill" id="rs">이 탭 기본값으로 되돌리기</button>`;
  if(tab==="help"){
   const eg=(c,n)=>`<div class="eg"><code>${esc(c)}</code><span>${hl(c).replace(/<span class="pop"[^>]*>/g,'<span class="ex">')}${n?`<br><small>${n}</small>`:""}</span></div>`;
@@ -233,13 +256,22 @@ function pane(){
   <h3>목록과 링크</h3><ol><li>좋아요·싫어요 목록은 한 줄에 항목 하나씩 적어요.</li><li>링크 연결은 이름 | @아이디 | 주소 순서로 한 줄에 하나씩 적어요. 주소를 비우면 글자만 보여요.</li></ol>
   <h3>저장하기</h3><ol><li>적는 대로 홈 화면에 바로 미리 보여요.</li><li>저장을 누르면 GitHub에 올라가고, 방문자 화면에는 1~2분 뒤 반영돼요.</li></ol>`}
  if(tab==="popups")h=`<h2>팝업 글</h2><p>본문에 [[제목]] 을 쓰면 점선 글자가 되고, 누르면 이 글이 팝업으로 열려요. 글자를 다르게 보이려면 [[보이는글|제목]], 링크는 [글자](https://주소) 로 써요. '또 내용'을 적으면 팝업에 또 버튼이 생겨요.</p>`+D.popups.map((x,i)=>`<label>제목 ${i+1}</label><input data-pi="${i}" data-f="title" value="${esc(x.title)}"><label>내용</label><textarea data-pi="${i}" data-f="body">${esc(x.body)}</textarea><label>또 제목 (선택)</label><input data-pi="${i}" data-f="title2" value="${esc(x.title2||"")}"><label>또 내용 (선택)</label><textarea data-pi="${i}" data-f="body2">${esc(x.body2||"")}</textarea><button class="pill" data-del="${i}">삭제</button>`).join("")+`<br><button class="pill" id="add">+ 글 추가</button>`;
+ if(tab==="music")h=`<h2>음악</h2><p>홈 하단의 ${esc(D.footLeft)} 토글을 누르면 재생돼요. 브라우저 정책상 방문자가 직접 눌러야 재생이 시작돼요.</p>${inp("mu","유튜브 링크 (영상 또는 재생목록)",D.music.url)}<label>음량 <span id="vv">${D.music.volume}</span></label><input type="range" min="0" max="100" data-k="mv" value="${D.music.volume}"><button class="pill" id="pv">미리 듣기 / 멈추기</button>`;
+ if(tab==="favicon")h=`<h2>파비콘</h2><p>이모지 한 글자를 쓰거나 이미지를 올릴 수 있어요. 이미지는 정사각형 PNG를 추천해요.</p>${inp("favicon","이모지 또는 이미지 경로",D.favicon)}<button class="pill" id="upb">이미지 올리기</button><input type="file" accept="image/*" id="upf" hidden>`;
+ if(tab==="cursor")h=`<h2>마우스 커서</h2><p>32×32px 안팎의 PNG를 추천해요(최대 128px). 이미지 왼쪽 위 모서리가 클릭 위치예요.</p>${inp("cursor","이미지 경로 또는 주소",D.cursor==="dot"?"":D.cursor)}<button class="pill" id="upb">이미지 올리기</button> <button class="pill" id="cdot">검정 점</button> <button class="pill" id="cnone">기본 커서로</button><input type="file" accept="image/*" id="upf" hidden>`;
  $("pane").innerHTML=h;
+ const pv=$("pv");if(pv)pv.onclick=toggleMusic;
+ const ub=$("upb");if(ub){ub.onclick=()=>$("upf").click();$("upf").onchange=upload}
+ const cd=$("cdot");if(cd)cd.onclick=()=>{D.cursor="dot";pane();render()};
+ const cn=$("cnone");if(cn)cn.onclick=()=>{D.cursor="";pane();render()};
  const ad=$("add");if(ad)ad.onclick=()=>{D.popups.push({title:"새 팝업",body:"",title2:"",body2:""});pane();render()};
  document.querySelectorAll("[data-del]").forEach(b=>b.onclick=()=>{D.popups.splice(+b.dataset.del,1);pane();render()});
- const rs=$("rs");if(rs)rs.onclick=()=>{["footLeft","update","footer","tabTitle","favicon"].forEach(k=>D[k]=DEF[k]);pane();render()};
+ const rs=$("rs");if(rs)rs.onclick=()=>{["footLeft","update","tabTitle"].forEach(k=>D[k]=DEF[k]);pane();render()};
 }
 $("pane").addEventListener("input",e=>{
  const t=e.target,k=t.dataset.k,s=t.dataset.s;
+ if(k==="mu"){D.music.url=t.value.trim();render();return}
+ if(k==="mv"){D.music.volume=+t.value;$("vv").textContent=t.value;if(pl&&pl.setVolume)pl.setVolume(+t.value);return}
  if(t.dataset.pi!==undefined){D.popups[+t.dataset.pi][t.dataset.f]=t.value;render();return}
  if(s){D.stats[+s[0]][+s[1]]=t.value}
  else if(tab==="gh"){const c=cfg();c[k]=t.value.trim();localStorage.setItem(CFG_KEY,JSON.stringify(c));return}
@@ -253,22 +285,32 @@ $("menu").onclick=open_;$("x").onclick=()=>$("ov").classList.remove("on");
 $("ov").onclick=e=>{if(e.target===$("ov"))$("ov").classList.remove("on")};
 $("lo").onclick=()=>{const c=cfg();c.token="";localStorage.setItem(CFG_KEY,JSON.stringify(c));$("st").textContent="로그아웃됨";pane()};
 
+async function ghPut(path,b64,msg){
+ const c=cfg();if(!c.token||!c.owner||!c.repo)throw new Error("gh");
+ const br=c.branch||"main",api=`https://api.github.com/repos/${c.owner}/${c.repo}/contents/${path}`,H={Authorization:"Bearer "+c.token,Accept:"application/vnd.github+json"};
+ const g=await fetch(`${api}?ref=${br}`,{headers:H}),body={message:msg,branch:br,content:b64};
+ if(g.ok)body.sha=(await g.json()).sha;
+ const r=await fetch(api,{method:"PUT",headers:H,body:JSON.stringify(body)});
+ return r.ok?"ok":"실패 ("+r.status+") 토큰·저장소 정보를 확인해주세요";
+}
 $("sv").onclick=async()=>{
- const c=cfg(),st=$("st");
- if(!c.token||!c.owner||!c.repo){tab="gh";pane();st.textContent="GitHub 설정을 먼저 입력해주세요";return}
- const path=c.path||"data.json",br=c.branch||"main";
- const api=`https://api.github.com/repos/${c.owner}/${c.repo}/contents/${path}`;
- const H={Authorization:"Bearer "+c.token,Accept:"application/vnd.github+json"};
- st.textContent="저장 중...";
+ const st=$("st");st.textContent="저장 중...";
  try{
-  const g=await fetch(`${api}?ref=${br}`,{headers:H});
-  SHA=g.ok?(await g.json()).sha:null;
-  const body={message:"update home data",branch:br,content:btoa(unescape(encodeURIComponent(JSON.stringify(D,null,2))))};
-  if(SHA)body.sha=SHA;
-  const r=await fetch(api,{method:"PUT",headers:H,body:JSON.stringify(body)});
-  st.textContent=r.ok?"저장됨 · 반영까지 1~2분 걸려요":"저장 실패 ("+r.status+") 토큰·저장소 정보를 확인해주세요";
- }catch(e){st.textContent="네트워크 오류: 다시 시도해주세요"}
+  const m=await ghPut(cfg().path||"data.json",btoa(unescape(encodeURIComponent(JSON.stringify(D,null,2)))),"update home data");
+  st.textContent=m==="ok"?"저장됨 · 반영까지 1~2분 걸려요":"저장 "+m;
+ }catch(e){if(e.message==="gh"){tab="gh";pane();st.textContent="GitHub 설정을 먼저 입력해주세요"}else st.textContent="네트워크 오류: 다시 시도해주세요"}
 };
+async function upload(e){
+ const f=e.target.files[0];if(!f)return;const st=$("st"),k=tab==="favicon"?"favicon":"cursor";
+ const ext=(f.name.split(".").pop()||"png").toLowerCase().replace(/[^a-z0-9]/g,"");
+ st.textContent="올리는 중...";
+ const b64=await new Promise((ok,no)=>{const fr=new FileReader();fr.onload=()=>ok(fr.result.split(",")[1]);fr.onerror=no;fr.readAsDataURL(f)});
+ try{
+  const path=`assets/${k}.${ext}`,m=await ghPut(path,b64,"upload "+k);
+  if(m!=="ok"){st.textContent="업로드 "+m;return}
+  D[k]=path+"?v="+Date.now();st.textContent="올렸어요 · 저장도 눌러주세요";pane();render();
+ }catch(err){if(err.message==="gh"){tab="gh";pane();st.textContent="GitHub 설정을 먼저 입력해주세요"}else st.textContent="네트워크 오류: 다시 시도해주세요"}
+}
 load();
 </script>
 </body>
