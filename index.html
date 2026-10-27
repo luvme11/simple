@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>만약</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+<style>
+:root{--bg:#fff;--fg:#111;--sub:#666;--line:#111;--faint:#bbb;--chip:#111;--chipfg:#fff}
+:root[data-theme=dark]{--bg:#121212;--fg:#eee;--sub:#999;--line:#eee;--faint:#555;--chip:#eee;--chipfg:#121212}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:13px/1.8 Pretendard,system-ui,sans-serif;min-height:100vh}
+#menu{position:fixed;top:12px;right:14px;background:none;border:0;color:var(--fg);font-size:18px;cursor:pointer;opacity:.5}
+#menu:hover{opacity:1}
+main{max-width:422px;margin:70px auto 0;padding:0 14px}
+header{display:flex;justify-content:space-between;align-items:flex-end;padding-bottom:6px}
+h1{margin:0;font-size:30px;line-height:1.1;font-weight:800}
+.hr{text-align:right;font-size:11px;line-height:1.5;color:var(--sub)}.hr b{display:block;color:var(--fg);font-size:12px}
+.box{border-top:2px solid var(--line)}.box.t1{border-top-width:1px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);border-bottom:1px solid var(--line)}
+.stats div{padding:8px 8px 8px 0;font-size:11.5px;line-height:1.5;color:var(--sub)}
+.stats div+div{padding-left:8px;border-left:1px solid var(--line)}
+.stats b{display:block;color:var(--fg)}
+.bio{padding:12px 4px;margin:0;border-bottom:1px solid var(--line);font-size:11.5px;line-height:1.9;text-indent:1em;white-space:pre-wrap}
+.cols{display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid var(--line)}
+.cols section{padding:12px 10px 10px 0}.cols section+section{padding-left:10px;border-left:1px solid var(--line)}
+.chip,mark{background:var(--chip);color:var(--chipfg);-webkit-box-decoration-break:clone;box-decoration-break:clone}
+mark{padding:1px 4px;margin:0 1px;border-radius:2px}
+.chip{display:inline-block;font-weight:700;font-size:11px;padding:1px 9px;border-radius:2px;margin-bottom:6px}
+ul{list-style:none;margin:0;padding:0}li{font-size:11.5px;line-height:1.5;padding:4px 0 4px 12px;text-indent:-12px}li:before{content:"- "}
+.low{display:grid;grid-template-columns:1.1fr 1fr;border-bottom:2px solid var(--line)}
+.links{padding:10px 10px 8px 0}.links a{display:flex;align-items:baseline;gap:6px;color:var(--fg);text-decoration:none;font-size:11.5px;line-height:2}
+.links a i{flex:1;border-bottom:1px dotted var(--faint)}.links a span{color:var(--sub);font-size:10.5px}
+.note{padding:10px 0 8px 10px;border-left:1px solid var(--line);font-size:11px;line-height:1.9;text-align:justify}
+footer{display:flex;justify-content:space-between;align-items:center;padding:8px 0;font-size:9.5px;letter-spacing:.15em;font-weight:700}
+.tg{display:flex;align-items:center;gap:7px;cursor:pointer;background:none;border:0;color:var(--fg);font:inherit;padding:0}
+.tg s{width:22px;height:12px;border:1.5px solid var(--fg);border-radius:8px;position:relative}
+.tg s:after{content:"";position:absolute;top:1.5px;left:2px;width:6px;height:6px;border-radius:50%;background:var(--fg);transition:.2s}
+:root[data-theme=dark] .tg s:after{left:11px}
+.pop{border-bottom:1px dotted var(--fg);cursor:pointer}
+.pop.on{background:var(--chip);color:var(--chipfg);border-bottom-color:transparent}
+.pw{position:absolute;z-index:6;width:250px;max-width:calc(100vw - 16px);background:var(--bg);color:var(--fg);border:1px solid var(--line);box-shadow:5px 5px 0 var(--sub);padding:12px 12px 10px;text-align:left}
+.pw .chip{margin:0}
+.pb{font-size:11.5px;line-height:1.9;margin:10px 0 12px;white-space:pre-wrap;word-break:keep-all}
+.pf{display:flex;justify-content:space-between;align-items:center}
+.pc{font:inherit;font-size:10px;font-weight:600;background:var(--bg);color:var(--fg);border:1px solid var(--line);padding:0 8px;line-height:18px;cursor:pointer;text-decoration:none}
+.pw.inv{background:var(--chip);color:var(--chipfg);border-color:var(--chip)}
+.pw.inv .chip{background:var(--chipfg);color:var(--chip)}
+.pw.inv .pc{background:var(--chip);color:var(--chipfg);border-color:var(--chipfg)}
+.pw.inv mark{background:var(--chipfg);color:var(--chip)}
+.pw.inv .pop{border-bottom-color:var(--chipfg)}
+#lines{position:absolute;left:0;top:0;width:1px;height:1px;overflow:visible;pointer-events:none;z-index:5}
+.ex{border-bottom:1px dotted var(--fg)}
+.eg{display:grid;grid-template-columns:1fr 1fr;gap:6px 14px;align-items:center;border-bottom:1px solid var(--line);padding:9px 0;font-size:12px;line-height:1.6}
+.eg code{font:11px ui-monospace,Menlo,monospace;border:1px dotted var(--sub);padding:2px 6px;word-break:break-all}
+.eg small{color:var(--sub);font-size:10.5px}
+#pane h3{font-size:12px;margin:20px 0 2px}
+#pane ol{margin:4px 0;padding-left:18px;font-size:11.5px;line-height:1.9}
+#fn{text-align:center;margin:70px 0 30px;font-size:10px;letter-spacing:.2em;color:var(--sub)}
+
+/* admin */
+#ov{position:fixed;inset:0;background:rgba(0,0,0,.35);display:none;align-items:center;justify-content:center;padding:14px;z-index:9}
+#ov.on{display:flex}
+#ad{width:min(820px,100%);height:min(620px,94vh);background:var(--bg);color:var(--fg);border:1px solid var(--line);box-shadow:6px 6px 0 var(--sub);display:grid;grid-template:auto 1fr auto/178px 1fr;overflow:hidden;font-family:Pretendard,sans-serif}
+#ad header{grid-column:1/3;padding:10px 14px;border-bottom:2px solid var(--line);align-items:center;font-size:15px;font-weight:800}
+#ad header em{font-style:normal;font-size:9.5px;font-weight:700;letter-spacing:.15em;color:var(--sub);margin-left:10px}
+#x{border:1px solid var(--line);background:var(--bg);color:var(--fg);width:22px;height:22px;line-height:18px;font-size:11px;cursor:pointer;padding:0}
+nav{border-right:1px solid var(--line);padding:10px 0;overflow:auto}
+nav small{display:block;margin:16px 14px 4px;font-size:9.5px;font-weight:700;letter-spacing:.15em;color:var(--sub)}
+nav button{display:block;width:100%;text-align:left;border:0;background:none;color:var(--fg);padding:7px 14px;font:inherit;font-size:12px;cursor:pointer}
+nav button:hover{text-decoration:underline dotted}
+nav button.on{background:var(--chip);color:var(--chipfg);font-weight:700}
+#pane{padding:18px 22px;overflow:auto}
+#pane h2{margin:0 0 6px;padding-bottom:8px;font-size:16px;font-weight:800;border-bottom:1px solid var(--line)}
+#pane p{margin:0 0 6px;color:var(--sub);font-size:11px;line-height:1.7}
+#pane label{display:block;font-size:10.5px;font-weight:700;margin:14px 0 4px}
+#pane input,#pane textarea{width:100%;font:inherit;font-size:12.5px;color:var(--fg);background:var(--bg);border:1px solid var(--line);border-radius:0;padding:9px 10px;outline:0}
+#pane input:focus,#pane textarea:focus{box-shadow:3px 3px 0 var(--sub)}
+#pane textarea{min-height:110px;resize:vertical;line-height:1.7}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.pill{border:1px solid var(--line);background:var(--bg);color:var(--fg);padding:3px 12px;font:inherit;font-size:11px;font-weight:600;cursor:pointer;margin-top:14px}
+.pill:hover{background:var(--chip);color:var(--chipfg)}
+#bar{grid-column:1/3;display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-top:2px solid var(--line)}
+#st{font-size:11px;color:var(--sub)}
+#bar button{border:1px solid var(--line);padding:6px 18px;font:inherit;font-weight:700;font-size:12px;cursor:pointer;background:var(--bg);color:var(--fg)}
+#sv{background:var(--chip)!important;color:var(--chipfg)!important;margin-right:6px}
+@media(max-width:600px){#ad{grid-template-columns:1fr;grid-template-rows:auto auto 1fr auto}#ad header,#bar{grid-column:1}nav{display:flex;overflow-x:auto;padding:0;border-right:0;border-bottom:1px solid var(--line)}nav small{display:none}nav button{width:auto;white-space:nowrap}}
+</style>
+</head>
+<body>
+<button id="menu" aria-label="관리자">☰</button>
+<main>
+  <header><h1 id="title"></h1><div class="hr"><b id="handle"></b><span id="sub"></span></div></header>
+  <div class="box"><div class="stats" id="stats"></div>
+  <p class="bio" id="bio"></p>
+  <div class="cols"><section><span class="chip" id="lc"></span><ul id="ll"></ul></section><section><span class="chip" id="dc"></span><ul id="dl"></ul></section></div>
+  <div class="low"><div class="links" id="links"></div><div class="note" id="note"></div></div>
+  <footer><button class="tg" id="tg"><s></s><span id="fl"></span></button><span id="upd"></span></footer></div>
+  <div id="fn"></div>
+</main>
+
+<svg id="lines"></svg>
+<div id="ov"><div id="ad">
+  <header><span>관리자<em>ADMIN · v1</em></span><button id="x">✕</button></header>
+  <nav id="nav"></nav>
+  <div id="pane"></div>
+  <div id="bar"><span id="st">대기 중</span><div><button id="sv">저장</button><button id="lo">로그아웃</button></div></div>
+</div></div>
+
+<script>
+const DEF={
+ title:"만약",handle:"@aksdifr",sub:"상시 프로젝트 계정",
+ stats:[["Elyn","Caveduck · Teapot"],["Ai 채팅 90%","기타 10%"],["[[OPEN CBC]]","별도 메인 캐릭터 없음"]],
+ bio:"대체로 좋아하는 Ai 채팅 이야기만 합니다. 사담계의 성향을 띠고 있으며 편히 트윗 씁니다. 활동량 낮은 계정은 수시로 정리하여 블언블을 뮤트처럼 사용합니다. 재연결 ok!",
+ likeLabel:"(｡>ᴗ<)b",likes:["채팅 로그 백업","[[Ai 이미지 소비 및 생성]]","본명 언급을 비롯한 스포일러","간헐적 탐라 대화·마음 위주 교류"],
+ dislikeLabel:"( •̀_•́ )",dislikes:["짖은 욕설을 포함한 트윗","Ai 생성 이미지의 알고리즘 확산 방지","특정 인물 및 장르의 빈번한 비난 유입","캐릭터를 향한 과도한 희롱·조롱성 트윗"],
+ links:[["렌치","@FaaastRaven_","https://x.com/FaaastRaven_"],["이시르","@moran_",""],["10","@qwerty",""]],
+ noteLabel:"배려 불필요",note:"좋아하는 게 많아 해당 목록 변동 가능성 다분합니다. 짧고 맡은 플레이가 잦아 다른 캐릭터 얘기도 쉽게 합니다. [[links]]",
+ footLeft:"DEAR",update:"UPDATE 2026.10.",footer:"LUVINFO",tabTitle:"만약",favicon:"🖤",
+ popups:[
+  {title:"Ai 이미지 소비 및 생성",body:"개인 만족용으로 NovelAI를 이용한 Ai 이미지 생성합니다…… 전달해 드린 에셋은 저장 및 가공, 닉네임을 밝히지 않은 업로드 등 어떻게 사용해 주시든 대체로 상관없습니다 다만 이별 후 사용도 개의치 않아요"},
+  {title:"OPEN CBC",body:"유입, 타임라인 내 자연 발생, 찍먹…… 이것저것 상관없습니다 메인이라고 할 만한 캐릭터 없이 굴러가며 떠드는 캐릭터가 그때그때 바뀝니다 하단 캐릭터 리스트의 순서도 별 의미 없습니다",title2:"그리고",body2:"자주는 아니지만 언급할 수 있습니다: @UwUx0w0 님의 실론, @seita 님과 @......ToT 님, @qwerty 님의 캐릭터 전반"},
+  {title:"links",body:"교류는 아래 링크로 받아요.\n[트위터](https://x.com/aksdifr)"}
+ ]
+};
+const CFG_KEY="home_gh_cfg";
+let D=JSON.parse(JSON.stringify(DEF)),SHA=null,tab="gh";
+const hl=s=>esc(s)
+ .replace(/\[([^\]\[]+)\]\((https?:\/\/[^\s)]+)\)/g,'<span class="pop" data-u="$2">$1</span>')
+ .replace(/\[\[(.+?)\]\]/g,(m,a)=>{const i=a.indexOf("|"),v=i<0?a:a.slice(0,i),k=i<0?a:a.slice(i+1);return `<span class="pop" data-p="${k.trim()}">${v.trim()}</span>`})
+ .replace(/==(.+?)==/g,"<mark>$1</mark>");
+const $=id=>document.getElementById(id),esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const cfg=()=>{try{return JSON.parse(localStorage.getItem(CFG_KEY))||{}}catch(e){return{}}};
+
+function render(){
+ closeAll();
+ $("title").textContent=D.title;$("handle").textContent=D.handle;$("sub").textContent=D.sub;
+ $("stats").innerHTML=D.stats.map(s=>`<div><b>${hl(s[0])}</b>${hl(s[1])}</div>`).join("");
+ $("bio").innerHTML=hl(D.bio);
+ $("lc").textContent=D.likeLabel;$("dc").textContent=D.dislikeLabel;
+ $("ll").innerHTML=D.likes.map(x=>`<li>${hl(x)}</li>`).join("");
+ $("dl").innerHTML=D.dislikes.map(x=>`<li>${hl(x)}</li>`).join("");
+ $("links").innerHTML=D.links.map(l=>`<a ${l[2]?`href="${esc(l[2])}" target="_blank" rel="noopener"`:""}>${esc(l[0])}<i></i><span>${esc(l[1])}</span></a>`).join("");
+ $("note").innerHTML=`<b>${hl(D.noteLabel)}</b> ${hl(D.note)}`;
+ $("fl").textContent=D.footLeft;$("upd").textContent=D.update;$("fn").textContent=D.footer;
+ document.title=D.tabTitle;
+ let f=document.querySelector("link[rel=icon]");if(!f){f=document.createElement("link");f.rel="icon";document.head.appendChild(f)}
+ f.href="data:image/svg+xml,"+encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>${D.favicon}</text></svg>`);
+}
+async function load(){
+ try{const r=await fetch("data.json?"+Date.now());if(r.ok)D={...DEF,...await r.json()}}catch(e){}
+ render();
+}
+$("tg").onclick=()=>{const r=document.documentElement;const d=r.dataset.theme==="dark";r.dataset.theme=d?"light":"dark";try{localStorage.setItem("theme",r.dataset.theme)}catch(e){}};
+try{const t=localStorage.getItem("theme");if(t)document.documentElement.dataset.theme=t}catch(e){}
+
+/* ---- popups ---- */
+const GAP=50,OP=new Map();
+function layout(){
+ const m=document.querySelector("main").getBoundingClientRect(),mid=m.left+m.width/2,sx=scrollX,sy=scrollY,P={"-1":[],"1":[]};let g="";
+ OP.forEach(p=>{
+  const W=p.box.offsetWidth,H=p.box.offsetHeight,u=p.el.getBoundingClientRect(),rs=p.el.getClientRects();
+  const side=u.left+u.width/2<mid?-1:1,rc=side<0?rs[0]:rs[rs.length-1];
+  const ax=(side<0?rc.left:rc.right)+sx,ay=rc.top+rc.height/2+sy;
+  const left=side<0?m.left-GAP-W:m.right+GAP;
+  if(left>=8&&left+W<=innerWidth-8){
+   let top=Math.max(ay+10,sy+8);
+   P[side].forEach(o=>{if(top<o.b+12&&top+H>o.t-12)top=o.b+12});
+   P[side].push({t:top,b:top+H});
+   p.box.style.left=left+sx+"px";p.box.style.top=top+"px";
+   const px=side<0?left+sx+W:left+sx,py=top+22,d=side<0?1:-1;
+   const dx=Math.max(10,Math.min(40,Math.abs(ax-px)-8));
+   g+=`<polyline points="${px},${py} ${px+d*dx},${ay} ${ax},${ay}" fill="none" stroke="#999" stroke-width="1.2"/><rect x="${ax-2.5}" y="${ay-2.5}" width="5" height="5" style="fill:var(--fg)"/>`;
+  }else{
+   p.box.style.left=Math.max(8,(innerWidth-W)/2)+sx+"px";p.box.style.top=u.bottom+sy+12+"px";
+  }
+ });
+ $("lines").innerHTML=g;
+}
+function close(id){const p=OP.get(id);if(!p)return;p.box.remove();p.el.classList.remove("on");OP.delete(id);layout()}
+function closeAll(){[...OP.keys()].forEach(close)}
+function paint(p){
+ const f=p.f,fl=p.flip&&f.body2;
+ p.box.classList.toggle("inv",!!fl);
+ p.box.innerHTML=`<span class="chip">${esc(fl?(f.title2||f.title):f.title)}</span><div class="pb">${fl?hl(f.body2):(f.raw??hl(f.body||""))}</div><div class="pf"><button class="pc" data-a="x">닫기</button>${f.body2?`<button class="pc" data-a="f">${fl?"다시":"또"}</button>`:f.url?`<a class="pc" href="${esc(f.url)}" target="_blank" rel="noopener">이동</a>`:"<i></i>"}</div>`;
+}
+function openPop(id,el,f){
+ const box=document.createElement("div");box.className="pw";
+ const p={el,box,f,flip:false};OP.set(id,p);paint(p);
+ document.body.appendChild(box);el.classList.add("on");layout();
+}
+document.addEventListener("click",e=>{
+ const c=e.target.closest("button.pc");
+ if(c){const bx=c.closest(".pw");[...OP].forEach(([k,p])=>{if(p.box!==bx)return;if(c.dataset.a==="f"){p.flip=!p.flip;paint(p);layout()}else close(k)});return}
+ const t=e.target.closest(".pop");if(!t)return;
+ const u=t.dataset.u,key=t.dataset.p,id=u?"u:"+u:"p:"+key;
+ if(OP.has(id)){close(id);return}
+ if(u)openPop(id,t,{title:t.textContent,raw:`<span style="word-break:break-all">${esc(u)}</span>`,url:u});
+ else{const f=D.popups.find(x=>x.title===key);openPop(id,t,f||{title:key,raw:"아직 내용이 없어요."})}
+});
+addEventListener("resize",layout);
+addEventListener("keydown",e=>{if(e.key==="Escape"&&!$("ov").classList.contains("on")){const k=[...OP.keys()].pop();if(k)close(k)}});
+
+/* ---- admin ---- */
+const TABS=[["gh","GitHub 설정"],["_","SITE"],["help","글쓰기 도움말"],["basic","기본 정보"],["bio","소개글"],["popups","팝업 글"],["lists","좋아요 · 싫어요"],["links","링크 연결"],["note","배려 리스트"],["screen","화면 문구"]];
+$("nav").innerHTML=TABS.map(t=>t[0]==="_"?`<small>${t[1]}</small>`:`<button data-t="${t[0]}">${t[1]}</button>`).join("");
+$("nav").onclick=e=>{const b=e.target.closest("button");if(b){tab=b.dataset.t;pane()}};
+const inp=(k,l,v)=>`<label>${l}</label><input data-k="${k}" value="${esc(v)}">`;
+const area=(k,l,v)=>`<label>${l}</label><textarea data-k="${k}">${esc(v)}</textarea>`;
+function pane(){
+ document.querySelectorAll("#nav button").forEach(b=>b.classList.toggle("on",b.dataset.t===tab));
+ const c=cfg();let h="";
+ if(tab==="gh")h=`<h2>GitHub 설정</h2><p>토큰은 이 브라우저에만 저장돼요. repo의 Contents 쓰기 권한이 필요해요.</p>
+  ${inp("owner","GitHub 사용자명",c.owner)}${inp("repo","저장소 이름",c.repo)}${inp("branch","브랜치",c.branch||"main")}${inp("path","데이터 파일 경로",c.path||"data.json")}
+  <label>Personal access token</label><input data-k="token" type="password" value="${esc(c.token)}" placeholder="github_pat_...">`;
+ if(tab==="basic")h=`<h2>기본 정보</h2><p>정보 칸에도 ==형광펜==, [[팝업]]을 쓸 수 있어요. 자세한 방법은 글쓰기 도움말 탭을 봐주세요.</p>${inp("title","이름",D.title)}${inp("handle","계정",D.handle)}${inp("sub","계정 설명",D.sub)}
+  ${D.stats.map((s,i)=>`<label>정보 칸 ${i+1}</label><div class="row"><input data-s="${i}0" value="${esc(s[0])}"><input data-s="${i}1" value="${esc(s[1])}"></div>`).join("")}`;
+ if(tab==="bio")h=`<h2>소개글</h2><p>줄바꿈이 그대로 반영돼요. ==내용== 으로 감싸면 검정 형광펜 효과가 적용돼요.</p>${area("bio","소개",D.bio)}`;
+ if(tab==="lists")h=`<h2>좋아요 · 싫어요</h2><p>한 줄에 항목 하나씩 적어주세요. ==내용== 으로 검정 형광펜을 칠할 수 있어요.</p>${inp("likeLabel","왼쪽 칩 이름",D.likeLabel)}${area("likes","왼쪽 목록",D.likes.join("\n"))}${inp("dislikeLabel","오른쪽 칩 이름",D.dislikeLabel)}${area("dislikes","오른쪽 목록",D.dislikes.join("\n"))}`;
+ if(tab==="links")h=`<h2>링크 연결</h2><p>한 줄에 하나씩: 이름 | @아이디 | 주소</p>${area("links","링크 목록",D.links.map(l=>l.join(" | ")).join("\n"))}`;
+ if(tab==="note")h=`<h2>배려 리스트</h2><p>링크 목록 옆에 보이는 글이에요.</p>${inp("noteLabel","굵은 제목",D.noteLabel)}${area("note","내용",D.note)}`;
+ if(tab==="screen")h=`<h2>화면 문구</h2><p>하단과 탭에 표시되는 문구예요.</p>${inp("footLeft","토글 옆 글자",D.footLeft)}${inp("update","업데이트 표기",D.update)}${inp("footer","맨 아래 글자",D.footer)}${inp("tabTitle","탭 이름",D.tabTitle)}${inp("favicon","파비콘 (이모지 1개)",D.favicon)}
+  <button class="pill" id="rs">이 탭 기본값으로 되돌리기</button>`;
+ if(tab==="help"){
+  const eg=(c,n)=>`<div class="eg"><code>${esc(c)}</code><span>${hl(c).replace(/<span class="pop"[^>]*>/g,'<span class="ex">')}${n?`<br><small>${n}</small>`:""}</span></div>`;
+  h=`<h2>글쓰기 도움말</h2><p>소개글, 좋아요·싫어요 목록, 정보 칸, 배려 리스트, 팝업 내용에서 아래 표기를 쓸 수 있어요. 왼쪽이 쓰는 법, 오른쪽이 보이는 모양이에요.</p>`
+  +eg("==형광펜==","검정 배경에 흰 글씨로 강조돼요")
+  +eg("[[Ai 이미지]]","점선 글자가 돼요. 누르면 제목이 똑같은 팝업 글이 열려요")
+  +eg("[[자세히|Ai 이미지]]","보이는 글자는 '자세히', 열리는 팝업은 'Ai 이미지'예요")
+  +eg("[트위터](https://x.com/aksdifr)","누르면 주소가 담긴 팝업이 열리고 이동 버튼으로 새 탭에서 열려요")
+  +eg("==[[Ai 이미지]]==","형광펜과 팝업을 같이 쓸 수 있어요")
+  +`<h3>팝업 만드는 순서</h3><ol><li>왼쪽 메뉴 팝업 글 → + 글 추가로 제목과 내용을 적어요.</li><li>소개글 같은 본문에 [[제목]] 을 써요. 제목은 한 글자도 다르지 않게 똑같이 써야 이어져요.</li><li>줄을 바꾸려면 Enter를 누르면 돼요. 팝업 내용 안에서도 위 표기를 모두 쓸 수 있어요.</li><li>또 제목·또 내용을 적으면 팝업에 또 버튼이 생겨요. 누르면 검정 바탕의 두 번째 글로 바뀌고, 다시 버튼을 누르면 처음으로 돌아와요. 비워 두면 버튼이 없어요.</li></ol>
+  <h3>목록과 링크</h3><ol><li>좋아요·싫어요 목록은 한 줄에 항목 하나씩 적어요.</li><li>링크 연결은 이름 | @아이디 | 주소 순서로 한 줄에 하나씩 적어요. 주소를 비우면 글자만 보여요.</li></ol>
+  <h3>저장하기</h3><ol><li>적는 대로 홈 화면에 바로 미리 보여요.</li><li>저장을 누르면 GitHub에 올라가고, 방문자 화면에는 1~2분 뒤 반영돼요.</li></ol>`}
+ if(tab==="popups")h=`<h2>팝업 글</h2><p>본문에 [[제목]] 을 쓰면 점선 글자가 되고, 누르면 이 글이 팝업으로 열려요. 글자를 다르게 보이려면 [[보이는글|제목]], 링크는 [글자](https://주소) 로 써요. '또 내용'을 적으면 팝업에 또 버튼이 생겨요.</p>`+D.popups.map((x,i)=>`<label>제목 ${i+1}</label><input data-pi="${i}" data-f="title" value="${esc(x.title)}"><label>내용</label><textarea data-pi="${i}" data-f="body">${esc(x.body)}</textarea><label>또 제목 (선택)</label><input data-pi="${i}" data-f="title2" value="${esc(x.title2||"")}"><label>또 내용 (선택)</label><textarea data-pi="${i}" data-f="body2">${esc(x.body2||"")}</textarea><button class="pill" data-del="${i}">삭제</button>`).join("")+`<br><button class="pill" id="add">+ 글 추가</button>`;
+ $("pane").innerHTML=h;
+ const ad=$("add");if(ad)ad.onclick=()=>{D.popups.push({title:"새 팝업",body:"",title2:"",body2:""});pane();render()};
+ document.querySelectorAll("[data-del]").forEach(b=>b.onclick=()=>{D.popups.splice(+b.dataset.del,1);pane();render()});
+ const rs=$("rs");if(rs)rs.onclick=()=>{["footLeft","update","footer","tabTitle","favicon"].forEach(k=>D[k]=DEF[k]);pane();render()};
+}
+$("pane").addEventListener("input",e=>{
+ const t=e.target,k=t.dataset.k,s=t.dataset.s;
+ if(t.dataset.pi!==undefined){D.popups[+t.dataset.pi][t.dataset.f]=t.value;render();return}
+ if(s){D.stats[+s[0]][+s[1]]=t.value}
+ else if(tab==="gh"){const c=cfg();c[k]=t.value.trim();localStorage.setItem(CFG_KEY,JSON.stringify(c));return}
+ else if(k==="likes"||k==="dislikes")D[k]=t.value.split("\n").map(x=>x.trim()).filter(Boolean);
+ else if(k==="links")D.links=t.value.split("\n").map(x=>x.split("|").map(y=>y.trim())).filter(a=>a[0]).map(a=>[a[0],a[1]||"",a[2]||""]);
+ else D[k]=t.value;
+ render();
+});
+const open_=()=>{$("ov").classList.add("on");pane()};
+$("menu").onclick=open_;$("x").onclick=()=>$("ov").classList.remove("on");
+$("ov").onclick=e=>{if(e.target===$("ov"))$("ov").classList.remove("on")};
+$("lo").onclick=()=>{const c=cfg();c.token="";localStorage.setItem(CFG_KEY,JSON.stringify(c));$("st").textContent="로그아웃됨";pane()};
+
+$("sv").onclick=async()=>{
+ const c=cfg(),st=$("st");
+ if(!c.token||!c.owner||!c.repo){tab="gh";pane();st.textContent="GitHub 설정을 먼저 입력해주세요";return}
+ const path=c.path||"data.json",br=c.branch||"main";
+ const api=`https://api.github.com/repos/${c.owner}/${c.repo}/contents/${path}`;
+ const H={Authorization:"Bearer "+c.token,Accept:"application/vnd.github+json"};
+ st.textContent="저장 중...";
+ try{
+  const g=await fetch(`${api}?ref=${br}`,{headers:H});
+  SHA=g.ok?(await g.json()).sha:null;
+  const body={message:"update home data",branch:br,content:btoa(unescape(encodeURIComponent(JSON.stringify(D,null,2))))};
+  if(SHA)body.sha=SHA;
+  const r=await fetch(api,{method:"PUT",headers:H,body:JSON.stringify(body)});
+  st.textContent=r.ok?"저장됨 · 반영까지 1~2분 걸려요":"저장 실패 ("+r.status+") 토큰·저장소 정보를 확인해주세요";
+ }catch(e){st.textContent="네트워크 오류: 다시 시도해주세요"}
+};
+load();
+</script>
+</body>
+</html>
