@@ -50,6 +50,9 @@ footer{display:flex;justify-content:space-between;align-items:center;padding:8px
 .pw.inv .pc{background:var(--chip);color:var(--chipfg);border-color:var(--chipfg)}
 .pw.inv mark{background:var(--chipfg);color:var(--chip)}
 .pw.inv .pop{border-bottom-color:var(--chipfg)}
+body{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+img{-webkit-user-drag:none}
+#ov,#ov *{-webkit-user-select:text;user-select:text}
 #ytw{position:fixed;right:0;bottom:0;width:1px;height:1px;opacity:0;pointer-events:none;overflow:hidden}
 #lines{position:absolute;left:0;top:0;width:1px;height:1px;overflow:visible;pointer-events:none;z-index:5}
 .ex{border-bottom:1px dotted var(--fg)}
@@ -174,7 +177,7 @@ async function setCursor(){
   }catch(e){}
  }
  if(tok!==curTok)return;
- cst.textContent=`*{cursor:url("${src}") ${hx} ${hy},auto}.pop,button,a,label,summary{cursor:url("${src}") ${hx} ${hy},pointer}`;
+ cst.textContent=`*,*::before,*::after{cursor:url("${src}") ${hx} ${hy},auto!important}`;
 }
 
 /* ---- music ---- */
@@ -346,6 +349,9 @@ async function upload(e){
  try{D[k]=await prep(f,64,k==="favicon");st.textContent="적용됐어요 · 저장도 눌러주세요";pane();render()}
  catch(err){st.textContent="이미지를 읽지 못했어요. PNG나 JPG로 다시 올려주세요"}
 }
+/* 복사 방지: 관리자 창 안에서는 허용 */
+const inAdmin=e=>{const n=e.target&&e.target.nodeType===3?e.target.parentElement:e.target;return !!(n&&n.closest&&n.closest("#ov"))};
+["copy","cut","selectstart","dragstart","contextmenu"].forEach(n=>document.addEventListener(n,e=>{if(!inAdmin(e))e.preventDefault()}));
 load();
 </script>
 </body>
